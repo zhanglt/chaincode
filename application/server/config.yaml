@@ -9,7 +9,8 @@ client:
     level: info
   # MSP证书的根路径
   cryptoconfig:
-    path: 
+    path: /opt/fabric-samples/test-network/organizations
+
 # 通道定义
 channels:
   mychannel:
@@ -40,11 +41,11 @@ organizations:
     mspID: OrdererMSP
 
       # Needed to load users crypto keys and certs for this org (absolute path or relative to global crypto path, DEV mode)
-    cryptoPath: /opt/fabric-samples/test-network/organizations/ordererOrganizations/example.com/users/Admin@example.com/msp
+    cryptoPath: ordererOrganizations/example.com/users/Admin@example.com/msp
 
   Org1:
     mspid: Org1MSP
-    cryptoPath: /opt/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
+    cryptoPath: peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
     peers:
       - peer0.org1.example.com
 #      - peer1.jd.com
@@ -56,7 +57,7 @@ organizations:
           path: /opt/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/bcb6d64aa77a9fda97a884e93ebdc00e592cf10eebd5dc13b7f0dcd329fb0404_sk
   Org2:
     mspid: Org2MSP
-    cryptoPath: /opt/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp
+    cryptoPath: peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp
     peers:
       - peer0.org2.example.com
     users:
@@ -75,7 +76,7 @@ orderers:
       keep-alive-timeout: 20s
       keep-alive-permit: false
       fail-fast: false
-      allow-insecure: true
+      allow-insecure: false
     tlsCACerts:
       # Certificate location absolute path
       path: /opt/fabric-samples/test-network/organizations/ordererOrganizations/example.com/msp/tlscacerts/tlsca.example.com-cert.pem
@@ -92,20 +93,11 @@ peers:
       keep-alive-timeout: 20s
       keep-alive-permit: false
       fail-fast: false
-      allow-insecure: true
+      allow-insecure: false
     tlsCACerts:
       # Certificate location absolute path
       path: /opt/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
 
-#  peer1.jd.com:
-#    url: peer1.jd.com:7051
-#    grpcOptions:
-#      ssl-target-name-override: peer1.jd.com
-#      keep-alive-time: 0s
-#      keep-alive-timeout: 20s
-#      keep-alive-permit: false
-#      fail-fast: false
-#      allow-insecure: true
   peer0.org2.exmaple.com:
     url: peer0.org2.example.com:7051
     grpcOptions:
@@ -114,16 +106,20 @@ peers:
       keep-alive-timeout: 20s
       keep-alive-permit: false
       fail-fast: false
-      allow-insecure: true
+      allow-insecure: false
     tlsCACerts:
       # Certificate location absolute path
       path: /opt/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem
-#  peer1.taobao.com:
-#    url: peer1.taobao.com:7051
-#    grpcOptions:
-#      ssl-target-name-override: peer1.taobao.com
-#      keep-alive-time: 0s
-#      keep-alive-timeout: 20s
-#      keep-alive-permit: false
-#      fail-fast: false
-#      allow-insecure: true
+
+entityMatchers:
+  peer:
+
+    - pattern: (\w+).org1.example.com:(\d+)
+      urlSubstitutionExp: ${1}.org1.example.com:${2}
+      sslTargetOverrideUrlSubstitutionExp: ${1}.org1.example.com
+      mappedHost: peer0.org1.example.com
+
+    - pattern: (\w+).org2.example.com:(\d+)
+      urlSubstitutionExp: ${1}.org2.example.com:${2}
+      sslTargetOverrideUrlSubstitutionExp: ${1}.org2.example.com
+      mappedHost: peer0.org2.example.com

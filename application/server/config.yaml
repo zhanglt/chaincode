@@ -21,18 +21,30 @@ channels:
         chaincodeQuery: true
         ledgerQuery: true
         eventSource: true
-#      peer1.jd.com:
-#        endorsingPeer: true
-#        chaincodeQuery: true
-#        ledgerQuery: true
-#        eventSource: true
-
+      peer0.org2.example.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+    policies:
+      discovery:
+        retryOpts:
+          #[Required for override] number of retry attempts
+          attempts: 4
+          initialBackoff: 1s
 # 组织配置
 # 组织配置
 organizations:
+  OrdererOrg:
+      # Membership Service Provider ID for this organization
+    mspID: OrdererMSP
+
+      # Needed to load users crypto keys and certs for this org (absolute path or relative to global crypto path, DEV mode)
+    cryptoPath: /opt/fabric-samples/test-network/organizations/ordererOrganizations/example.com/users/Admin@example.com/msp
+
   Org1:
     mspid: Org1MSP
-    cryptoPath: /opt/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/
+    cryptoPath: /opt/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
     peers:
       - peer0.org1.example.com
 #      - peer1.jd.com
@@ -44,7 +56,7 @@ organizations:
           path: /opt/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/bcb6d64aa77a9fda97a884e93ebdc00e592cf10eebd5dc13b7f0dcd329fb0404_sk
   Org2:
     mspid: Org2MSP
-    cryptoPath: /opt/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/
+    cryptoPath: /opt/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp
     peers:
       - peer0.org2.example.com
     users:
@@ -64,7 +76,9 @@ orderers:
       keep-alive-permit: false
       fail-fast: false
       allow-insecure: true
-
+    tlsCACerts:
+      # Certificate location absolute path
+      path: /opt/fabric-samples/test-network/organizations/ordererOrganizations/example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 # peers节点列表
 peers:
   # peer节点定义，可以定义多个
@@ -79,6 +93,10 @@ peers:
       keep-alive-permit: false
       fail-fast: false
       allow-insecure: true
+    tlsCACerts:
+      # Certificate location absolute path
+      path: /opt/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
+
 #  peer1.jd.com:
 #    url: peer1.jd.com:7051
 #    grpcOptions:
@@ -97,6 +115,9 @@ peers:
       keep-alive-permit: false
       fail-fast: false
       allow-insecure: true
+    tlsCACerts:
+      # Certificate location absolute path
+      path: /opt/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem
 #  peer1.taobao.com:
 #    url: peer1.taobao.com:7051
 #    grpcOptions:

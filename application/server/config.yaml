@@ -31,7 +31,7 @@ channels:
 # 组织配置
 organizations:
   Org1:
-    mspid: "Org1MSP"
+    mspid: Org1MSP
     cryptoPath: /opt/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/
     peers:
       - peer0.org1.example.com
@@ -43,7 +43,7 @@ organizations:
         key:
           path: /opt/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/bcb6d64aa77a9fda97a884e93ebdc00e592cf10eebd5dc13b7f0dcd329fb0404_sk
   Org2:
-    mspid: "Org2MSP"
+    mspid: Org2MSP
     cryptoPath: /opt/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/
     peers:
       - peer0.org2.example.com

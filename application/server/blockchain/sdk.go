@@ -1,6 +1,8 @@
 package blockchain
 
 import (
+	"fmt"
+
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel"
 	"github.com/hyperledger/fabric-sdk-go/pkg/core/config"
 	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
@@ -10,7 +12,7 @@ import (
 var (
 	sdk           *fabsdk.FabricSDK                                              // Fabric SDK
 	configPath    = "config.yaml"                                                // 配置文件路径
-	channelName   = "appchannel"                                                 // 通道名称
+	channelName   = "mychannel"                                                  // 通道名称
 	user          = "Admin"                                                      // 用户
 	chainCodeName = "fabric-realty"                                              // 链码名称
 	endpoints     = []string{"peer0.org1.example.com", "peer0.org2.example.com"} // 要发送交易的节点
@@ -53,6 +55,7 @@ func ChannelQuery(fcn string, args [][]byte) (channel.Response, error) {
 	ctx := sdk.ChannelContext(channelName, fabsdk.WithUser(user))
 	cli, err := channel.New(ctx)
 	if err != nil {
+		fmt.Println("调用ChannelQuery错误:", err)
 		return channel.Response{}, err
 	}
 	// 对区块链账本查询的操作（调用了链码的invoke），只返回结果

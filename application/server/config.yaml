@@ -9,8 +9,7 @@ client:
     level: info
   # MSP证书的根路径
   cryptoconfig:
-    path: /network/crypto-config
-
+    path: 
 # 通道定义
 channels:
   mychannel:
@@ -36,7 +35,20 @@ organizations:
     peers:
       - peer0.org1.example.com
 #      - peer1.jd.com
-
+    users:
+      Admin:
+        cert:
+          path: /opt/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/cacerts/localhost-7054-ca-org1.pem
+  Org2:
+    mspid: "Org2MSP"
+    cryptoPath: /opt/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/users/{username}@org1.example.com/msp
+    peers:
+      - peer0.org2.example.com
+    users:
+      Admin:
+        cert:
+          path: /opt/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org2.example.com/msp/cacerts/localhost-7054-ca-org2.pem
+#      - peer1.jd.com
 # orderer节点列表
 orderers:
   orderer.example.com:

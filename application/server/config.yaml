@@ -39,7 +39,9 @@ organizations:
     users:
       Admin:
         cert:
-          path: /opt/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/cacerts/localhost-7054-ca-org1.pem
+          path: /opt/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/cert.pem
+        key:
+          path: /opt/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/bcb6d64aa77a9fda97a884e93ebdc00e592cf10eebd5dc13b7f0dcd329fb0404_sk
   Org2:
     mspid: "Org2MSP"
     cryptoPath: /opt/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/
@@ -48,7 +50,9 @@ organizations:
     users:
       Admin:
         cert:
-          path: /opt/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/cacerts/localhost-8054-ca-org2.pem
+          path: /opt/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/signcerts/cert.pem
+        key:
+          path: /opt/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/keystore/6ab1d5cd0940174c1555882fe2f7d431965f4ef149645fa0b4206b2116de6d0b_sk
 orderers:
   orderer.example.com:
     url: orderer.example.com:7050

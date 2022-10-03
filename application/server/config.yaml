@@ -27,19 +27,12 @@ channels:
         chaincodeQuery: true
         ledgerQuery: true
         eventSource: true
-    policies:
-      discovery:
-        retryOpts:
-          #[Required for override] number of retry attempts
-          attempts: 4
-          initialBackoff: 1s
 # 组织配置
 # 组织配置
 organizations:
   OrdererOrg:
-      # Membership Service Provider ID for this organization
+    # Membership Service Provider ID for this organization
     mspID: OrdererMSP
-
       # Needed to load users crypto keys and certs for this org (absolute path or relative to global crypto path, DEV mode)
     cryptoPath: ordererOrganizations/example.com/users/Admin@example.com/msp
 
@@ -49,6 +42,8 @@ organizations:
     peers:
       - peer0.org1.example.com
 #      - peer1.jd.com
+    certificateAuthorities:
+      - ca-org1
     users:
       Admin:
         cert:
@@ -60,6 +55,8 @@ organizations:
     cryptoPath: peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp
     peers:
       - peer0.org2.example.com
+    certificateAuthorities:
+      - ca-org2
     users:
       Admin:
         cert:
@@ -68,10 +65,12 @@ organizations:
           path: /opt/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/keystore/6ab1d5cd0940174c1555882fe2f7d431965f4ef149645fa0b4206b2116de6d0b_sk
 orderers:
   orderer.example.com:
-    url: orderer.example.com:7050
+    #url: orderer.example.com:7050
+    url: grpcs://127.0.0.1:7050
     # 传递给gRPC客户端构造函数
     grpcOptions:
       ssl-target-name-override: orderer.example.com
+      hostnameOverride: orderer.example.com
       keep-alive-time: 0s
       keep-alive-timeout: 20s
       keep-alive-permit: false
@@ -79,16 +78,19 @@ orderers:
       allow-insecure: false
     tlsCACerts:
       # Certificate location absolute path
-      path: /opt/fabric-samples/test-network/organizations/ordererOrganizations/example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+      #path: /opt/fabric-samples/test-network/organizations/ordererOrganizations/example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+      path: /opt/fabric-samples/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/ca.crt
 # peers节点列表
 peers:
   # peer节点定义，可以定义多个
   peer0.org1.example.com:
     # URL用于发送背书和查询请求
-    url: peer0.org1.example.com:7051
+    #url: peer0.org1.example.com:7051
+    url: grpcs://127.0.0.1:7051
     # 传递给gRPC客户端构造函数
     grpcOptions:
       ssl-target-name-override: peer0.org1.example.com
+      hostnameOverride: peer0.org1.example.com
       keep-alive-time: 0s
       keep-alive-timeout: 20s
       keep-alive-permit: false
@@ -96,12 +98,15 @@ peers:
       allow-insecure: false
     tlsCACerts:
       # Certificate location absolute path
-      path: /opt/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
+      #path: /opt/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
+      path: /opt/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
 
   peer0.org2.exmaple.com:
-    url: peer0.org2.example.com:7051
+    #url: peer0.org2.example.com:9051
+    url: grpcs://127.0.0.1:9051
     grpcOptions:
       ssl-target-name-override: peer0.org2.example.com
+      hostnameOverride: peer0.org2.example.com
       keep-alive-time: 0s
       keep-alive-timeout: 20s
       keep-alive-permit: false
@@ -109,8 +114,8 @@ peers:
       allow-insecure: false
     tlsCACerts:
       # Certificate location absolute path
-      path: /opt/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem
-
+      #path: /opt/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem
+      path:  /opt/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt
 entityMatchers:
   peer:
 

@@ -55,6 +55,8 @@ func ChannelQuery(fcn string, args [][]byte) (channel.Response, error) {
 	ctx := sdk.ChannelContext(channelName, fabsdk.WithUser(user))
 	cli, err := channel.New(ctx)
 	if err != nil {
+		fmt.Println("初始化cli user：", user)
+		fmt.Println("初始化cli channel：", channelName)
 		fmt.Println("调用ChannelQuery错误:", err)
 		return channel.Response{}, err
 	}

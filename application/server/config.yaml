@@ -114,12 +114,31 @@ peers:
 entityMatchers:
   peer:
 
-    - pattern: (\w+).org1.example.com:(\d+)
-      urlSubstitutionExp: ${1}.org1.example.com:${2}
-      sslTargetOverrideUrlSubstitutionExp: ${1}.org1.example.com
+    - pattern: peer0.org1.example.com:(\w+)
+      urlSubstitutionExp: peer0.org1.example.com:7051
+      sslTargetOverrideUrlSubstitutionExp: peer0.org1.example.com
       mappedHost: peer0.org1.example.com
 
-    - pattern: (\w+).org2.example.com:(\d+)
-      urlSubstitutionExp: ${1}.org2.example.com:${2}
-      sslTargetOverrideUrlSubstitutionExp: ${1}.org2.example.com
+    - pattern: peer0.org2.example.com:(\w+)
+      urlSubstitutionExp: peer0.org2.example.com:9051
+      sslTargetOverrideUrlSubstitutionExp: peer0.org2.example.com
       mappedHost: peer0.org2.example.com
+  orderer:
+    - pattern: (\w+).example.(\w+)
+      urlSubstitutionExp: orderer.example:7050
+      sslTargetOverrideUrlSubstitutionExp: orderer.example.com
+      mappedHost: orderer.example.com
+    - pattern: (\w+).example.(\w+):(\d+)
+      urlSubstitutionExp: order.example:7050
+      sslTargetOverrideUrlSubstitutionExp: orderer.example.com
+      mappedHost: orderer.example.com
+  certificateAuthority:
+    - pattern: (\w+).org1.example.(\w+)
+      urlSubstitutionExp: localhost:7054
+      sslTargetOverrideUrlSubstitutionExp: ca.org1.example.com
+      mappedHost: ca.org1.example.com
+    - pattern: (\w+).org2.example.(\w+)
+      urlSubstitutionExp: localhost:8054
+      sslTargetOverrideUrlSubstitutionExp: ca.org2.example.com
+      mappedHost: ca.org2.example.com
+  

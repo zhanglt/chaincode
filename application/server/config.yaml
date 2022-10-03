@@ -28,10 +28,11 @@ channels:
 #        eventSource: true
 
 # 组织配置
+# 组织配置
 organizations:
   Org1:
     mspid: "Org1MSP"
-    cryptoPath: /opt/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/{username}@org1.example.com/msp
+    cryptoPath: /opt/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/
     peers:
       - peer0.org1.example.com
 #      - peer1.jd.com
@@ -41,15 +42,13 @@ organizations:
           path: /opt/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/cacerts/localhost-7054-ca-org1.pem
   Org2:
     mspid: "Org2MSP"
-    cryptoPath: /opt/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/users/{username}@org1.example.com/msp
+    cryptoPath: /opt/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/
     peers:
       - peer0.org2.example.com
     users:
       Admin:
         cert:
-          path: /opt/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org2.example.com/msp/cacerts/localhost-7054-ca-org2.pem
-#      - peer1.jd.com
-# orderer节点列表
+          path: /opt/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/cacerts/localhost-8054-ca-org2.pem
 orderers:
   orderer.example.com:
     url: orderer.example.com:7050
